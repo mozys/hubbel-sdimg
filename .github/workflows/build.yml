@@ -40,4 +40,5 @@ jobs:
         path: |
           mender-convert/deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.mender
           mender-convert/deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.img.zip
+          mender-convert/logs/convert.log.*
         retention-days: 3
