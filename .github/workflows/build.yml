@@ -28,7 +28,8 @@ jobs:
         wget https://downloads.raspberrypi.org/raspios_lite_armhf/images/$RPI_IMG_FOLDER/$RPI_IMG_NAME.img.xz
         unxz $RPI_IMG_NAME.img.xz
         cd ..
-        MENDER_ARTIFACT_NAME=release-1 ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --config ../hubbel_config --overlay ./input/rootfs_overlay_demo
+        cp ../hubbel_config configs/
+        MENDER_ARTIFACT_NAME=release-1 ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --config configs/hubbel_config --overlay ./input/rootfs_overlay_demo
         zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img.zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img
         pwd
         ls -lah deploy/
