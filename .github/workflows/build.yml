@@ -34,11 +34,13 @@ jobs:
         cd ..
         MENDER_ARTIFACT_NAME=release-1 ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --overlay ./input/rootfs_overlay_demo
         ls deploy/
+        zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img.zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img
 
     - name: Upload sdimg and update artifact
       uses: actions/upload-artifact@v3
       with:
         name: image
         path: |
-          deploy/$RPI_IMG_NAME-raspberrypi4-mender.mender
+          deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.mender
+          deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.img.zip
         retention-days: 3
