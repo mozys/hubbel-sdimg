@@ -1,0 +1,44 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    paths-ignore:
+    - '*.md'
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    env:
+      MENDER_CONVERT_BRANCH: "4.0.1"
+      RPI_IMG_FOLDER: raspios_lite_armhf-2023-05-03
+      RPI_IMG_NAME: 2023-05-03-raspios-bullseye-armhf-lite
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Git tag
+      id: tagger
+      env:
+        BOARD: ${{ matrix.board.name }}
+        BUILD_TYPE: ${{ matrix.build_type.name }}
+      run: |
+        git clone -b $MENDER_CONVERT_BRANCH https://github.com/mendersoftware/mender-convert.git
+        cd mender-convert
+        ./docker-build
+        mkdir -p input
+        cd input
+        wget https://downloads.raspberrypi.org/raspios_lite_armhf/images/$RPI_IMG_FOLDER/$RPI_IMG_NAME.img.xz
+        unxz $RPI_IMG_NAME.img.xz
+        cd ..
+        MENDER_ARTIFACT_NAME=release-1 ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --overlay ./input/rootfs_overlay_demo
+        ls deploy/
+
+    - name: Upload sdimg and update artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: image
+        path: |
+          deploy/$RPI_IMG_NAME-raspberrypi4-mender.mender
+        retention-days: 3
