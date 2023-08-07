@@ -18,11 +18,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v3
     
-    - name: Git tag
-      id: tagger
-      env:
-        BOARD: ${{ matrix.board.name }}
-        BUILD_TYPE: ${{ matrix.build_type.name }}
+    - name: Build
       run: |
         git clone -b $MENDER_CONVERT_BRANCH https://github.com/mendersoftware/mender-convert.git
         cd mender-convert
@@ -33,14 +29,15 @@ jobs:
         unxz $RPI_IMG_NAME.img.xz
         cd ..
         MENDER_ARTIFACT_NAME=release-1 ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --overlay ./input/rootfs_overlay_demo
-        ls deploy/
         zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img.zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img
+        pwd
+        ls -lah deploy/
 
     - name: Upload sdimg and update artifact
       uses: actions/upload-artifact@v3
       with:
         name: image
         path: |
-          deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.mender
-          deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.img.zip
+          mender-convert/deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.mender
+          mender-convert/deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.img.zip
         retention-days: 3
