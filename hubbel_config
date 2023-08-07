@@ -1,0 +1,12 @@
+disable_64bit() {
+    # Disable 64bit mode
+    # https://hub.mender.io/t/hang-at-boot-waiting-for-root-device-mender-kernel-root/5693/12
+    log_info "Disable 64bit mode"
+    cat <<- EOF >> work/boot/config.txt
+
+# Disable 64bit
+arm_64bit=0
+EOF
+}
+
+PLATFORM_MODIFY_HOOKS+=(disable_64bit)
