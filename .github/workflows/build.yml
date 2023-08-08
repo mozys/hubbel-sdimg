@@ -17,6 +17,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+
+    - name: Install sdm
+      run: |
+        curl -L https://raw.githubusercontent.com/gitbls/sdm/master/EZsdmInstaller | bash
+        sudo sdm
     
     - name: Build
       run: |
