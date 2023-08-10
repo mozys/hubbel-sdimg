@@ -45,6 +45,9 @@ jobs:
         mkdir -p mender-convert/input
         mv $RPI_IMG_NAME.img mender-convert/input/
         cd mender-convert
+        ./scripts/bootstrap-rootfs-overlay-hosted-server.sh \
+          --output-dir ./input/rootfs_overlay_demo \
+          --tenant-token ${{ secrets.MENDER_ORG_TOKEN }}
         ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --config configs/hubbel_config --overlay ./input/rootfs_overlay_demo
 
     - name: Upload sdimg and update artifact
