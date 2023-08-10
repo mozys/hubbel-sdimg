@@ -29,7 +29,7 @@ jobs:
 
     - name: Modify image with sdm
       run: |
-        sudo sdm --customize --nowpa --locale de_DE.UTF-8 --restart --disable piwiz --regen-ssh-host-keys --user pi --password-user raspberry $RPI_IMG_NAME.img
+        sudo sdm --customize --nowpa --locale de_DE.UTF-8 --keymap de --restart --disable piwiz --regen-ssh-host-keys --user pi --password-user raspberry --autologin --bootset camera=1 --extend --xmb 3072 --apps @applist --poptions apps $RPI_IMG_NAME.img
     
     - name: Build mender-convert
       run: |
