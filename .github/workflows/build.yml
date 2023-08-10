@@ -43,7 +43,7 @@ jobs:
       run: |
         cp hubbel_config mender-convert/configs/
         mkdir -p mender-convert/input
-        mv $RPI_IMG_NAME.img input/
+        mv $RPI_IMG_NAME.img mender-convert/input/
         cd mender-convert
         ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --config configs/hubbel_config --overlay ./input/rootfs_overlay_demo
 
