@@ -21,23 +21,33 @@ jobs:
     - name: Install sdm
       run: |
         curl -L https://raw.githubusercontent.com/gitbls/sdm/master/EZsdmInstaller | bash
+
+    - name: Fetch and unpack rpi os image
+      run: |
+        wget https://downloads.raspberrypi.org/raspios_lite_armhf/images/$RPI_IMG_FOLDER/$RPI_IMG_NAME.img.xz
+        unxz $RPI_IMG_NAME.img.xz
+
+    - name: Modify image with sdm
+      run: |
+        sudo sdm --customize --nowpa --locale de_DE.UTF-8 --restart --disable piwiz --regen-ssh-host-keys --user pi --password-user raspberry $RPI_IMG_NAME.img
     
-    - name: Build
+    - name: Build mender-convert
       run: |
         git clone -b $MENDER_CONVERT_BRANCH https://github.com/mendersoftware/mender-convert.git
         cd mender-convert
         ./docker-build
-        mkdir -p input
-        cd input
-        wget https://downloads.raspberrypi.org/raspios_lite_armhf/images/$RPI_IMG_FOLDER/$RPI_IMG_NAME.img.xz
-        unxz $RPI_IMG_NAME.img.xz
-        sudo sdm --customize --nowpa --locale de_DE.UTF-8 --restart --disable piwiz --regen-ssh-host-keys --user pi --password-user raspberry $RPI_IMG_NAME.img
-        cd ..
-        cp ../hubbel_config configs/
-        MENDER_ARTIFACT_NAME=release-1 ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --config configs/hubbel_config --overlay ./input/rootfs_overlay_demo
-        zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img.zip deploy/$RPI_IMG_NAME-raspberrypi4-mender.img
-        pwd
-        ls -lah deploy/
+    
+    - name: Run mender-convert
+      env:
+        MENDER_ARTIFACT_NAME: release-1
+      run: |
+        cp hubbel_config mender-convert/configs/
+        cd mender-convert
+        ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --config configs/hubbel_config --overlay ./input/rootfs_overlay_demo
+
+    - name: Zip converted sdimg
+      run: |
+        zip mender-convert/deploy/$RPI_IMG_NAME-raspberrypi4-mender.img.zip mender-convert/deploy/$RPI_IMG_NAME-raspberrypi4-mender.img
 
     - name: Upload sdimg and update artifact
       uses: actions/upload-artifact@v3
