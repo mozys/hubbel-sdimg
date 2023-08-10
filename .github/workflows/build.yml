@@ -47,16 +47,12 @@ jobs:
         cd mender-convert
         ./docker-mender-convert --disk-image input/$RPI_IMG_NAME.img --config configs/raspberrypi4_config --config configs/hubbel_config --overlay ./input/rootfs_overlay_demo
 
-    - name: Zip converted sdimg
-      run: |
-        zip mender-convert/deploy/$RPI_IMG_NAME-raspberrypi4-mender.img.zip mender-convert/deploy/$RPI_IMG_NAME-raspberrypi4-mender.img
-
     - name: Upload sdimg and update artifact
       uses: actions/upload-artifact@v3
       with:
         name: image
         path: |
           mender-convert/deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.mender
-          mender-convert/deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.img.zip
+          mender-convert/deploy/${{ env.RPI_IMG_NAME }}-raspberrypi4-mender.img
           mender-convert/logs/convert.log.*
         retention-days: 3
