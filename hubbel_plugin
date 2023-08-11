@@ -1,0 +1,86 @@
+#!/bin/bash
+#
+# This is an sdm plugin for: rxapp
+#
+# The plugin is called three times: for Phase 0, Phase 1, and post-install.
+#
+
+function loadparams() {
+    source $SDMPT/etc/sdm/sdm-readparams
+}
+
+# $1 is the phase: "0", "1", or "post-install"
+# $2 is the argument list: arg1=val1|arg2=val2|arg3=val3| ...
+#
+# Main code for the Plugin
+#
+phase=$1
+pfx="$(basename $0)"     #For messages
+args="$2"
+loadparams
+
+if [ "$phase" == "0" ]
+then
+    #
+    # In Phase 0 all references to directories in the image must be preceded by $SDMPT
+    #
+    logtoboth "* Plugin $pfx: Start Phase 0"
+
+    logtoboth "> Plugin $pfx: Configure .bash_profile and .xinitrc for X and browser autostart"
+    cat >> $SDMPT/home/pi/.bash_profile <<EOF
+
+if [ -z \$DISPLAY ] && [ \$(tty) = /dev/tty1 ]
+then
+    startx
+fi
+
+EOF
+
+    cat >> $SDMPT/home/pi/.xinitrc <<EOF
+
+#!/usr/bin/env sh
+xset -dpms
+xset s off
+xset s noblank
+
+while true
+do
+    unclutter &
+    chromium-browser https://mozys.de \
+    --window-size=1360,768 \
+    --window-position=0,0 \
+    --start-fullscreen \
+    --kiosk \
+    --incognito \
+    --noerrdialogs \
+    --disable-translate \
+    --no-first-run \
+    --fast \
+    --fast-start \
+    --disable-infobars \
+    --disable-features=TranslateUI \
+    --disk-cache-dir=/dev/null \
+    --overscroll-history-navigation=0 \
+    --disable-pinch
+done
+
+EOF
+
+    logtoboth "* Plugin $pfx: Complete Phase 0"
+
+elif [ "$phase" == "1" ]
+then
+    #
+    # Phase 1 (in nspawn)
+    #
+    logtoboth "* Plugin $pfx: Start Phase 1"
+
+    logtoboth "* Plugin $pfx: Complete Phase 1"
+else
+    #
+    # Plugin Post-install edits
+    #
+    logtoboth "* Plugin $pfx: Start Phase post-install"
+
+    logtoboth "* Plugin $pfx: Complete Phase post-install"
+fi

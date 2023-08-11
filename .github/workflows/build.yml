@@ -29,7 +29,22 @@ jobs:
 
     - name: Modify image with sdm
       run: |
-        sudo sdm --customize --nowpa --locale de_DE.UTF-8 --keymap de --restart --disable piwiz --regen-ssh-host-keys --user pi --password-user raspberry --autologin --bootset camera=1,boot_behaviour=B2 --extend --xmb 3072 --apps @applist --poptions apps $RPI_IMG_NAME.img
+        sudo sdm --customize \
+          --nowpa \
+          --locale de_DE.UTF-8 \
+          --keymap de \
+          --restart \
+          --disable piwiz \
+          --regen-ssh-host-keys \
+          --user pi \
+          --password-user raspberry \
+          --autologin \
+          --bootset camera=1,boot_behaviour=B2 \
+          --extend --xmb 3072 \
+          --apps @applist \
+          --poptions apps \
+          --plugin ./hubbel_plugin
+          $RPI_IMG_NAME.img
 
     - name: Upload sdimg and update artifact
       uses: actions/upload-artifact@v3
