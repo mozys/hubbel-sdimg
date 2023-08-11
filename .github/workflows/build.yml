@@ -43,7 +43,7 @@ jobs:
           --extend --xmb 3072 \
           --apps @applist \
           --poptions apps \
-          --plugin ./hubbel_plugin
+          --plugin ./hubbel_plugin \
           $RPI_IMG_NAME.img
 
     - name: Upload sdimg and update artifact
