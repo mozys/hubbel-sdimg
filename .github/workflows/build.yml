@@ -29,6 +29,7 @@ jobs:
 
     - name: Modify image with sdm
       run: |
+        chmod +x hubbel_plugin
         sudo sdm --customize \
           --nowpa \
           --locale de_DE.UTF-8 \
