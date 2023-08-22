@@ -23,7 +23,7 @@ jobs:
     - name: Git tag
       id: tagger
       run: |
-        DESC=$(git --git-dir=$REPO_PATH/.git --work-tree=$REPO_PATH describe --tags)
+        DESC=$(git describe --tags)
         ARTIFACT_BASENAME=hubbel_$DESC_$RPI_IMG_NAME
         echo "gitdesc=$DESC" >> $GITHUB_OUTPUT
         echo "artifact_basename=$ARTIFACT_BASENAME" >> $GITHUB_OUTPUT
