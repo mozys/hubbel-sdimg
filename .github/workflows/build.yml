@@ -10,7 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     env:
-      MENDER_CONVERT_BRANCH: "4.0.1"
       RPI_IMG_FOLDER: raspios_lite_armhf-2023-05-03
       RPI_IMG_NAME: 2023-05-03-raspios-bullseye-armhf-lite
 
@@ -20,7 +19,7 @@ jobs:
 
     - name: Install sdm
       run: |
-        curl -L https://raw.githubusercontent.com/gitbls/sdm/master/EZsdmInstaller | bash
+        curl -L https://raw.githubusercontent.com/gitbls/sdm/7ec49db85c5b7ddf94160abd16be52101c0d3d23/EZsdmInstaller | bash
 
     - name: Fetch and unpack rpi os image
       run: |
