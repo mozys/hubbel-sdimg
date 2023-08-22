@@ -26,16 +26,6 @@ then
     #
     logtoboth "* Plugin $pfx: Start Phase 0"
 
-    logtoboth "> Plugin $pfx: Install postcardscanner service"
-
-    cd $SDMPT/home/pi
-    git clone https://github.com/nzottmann/postcardscanner.git
-    cd postcardscanner
-    python3 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    sudo systemctl enable postcardscanner.service
-
     logtoboth "* Plugin $pfx: Complete Phase 0"
 
 elif [ "$phase" == "1" ]
@@ -44,6 +34,19 @@ then
     # Phase 1 (in nspawn)
     #
     logtoboth "* Plugin $pfx: Start Phase 1"
+
+    logtoboth "> Plugin $pfx: Install postcardscanner service"
+
+    cd /home/pi
+    git clone https://github.com/nzottmann/postcardscanner.git
+    cd postcardscanner
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    sudo systemctl enable postcardscanner.service
+
+    logtoboth "> Set 'camera_auto_detect=1' in /boot/config.txt"
+    sed -i "s/camera_auto_detect=0/camera_auto_detect=1/" /boot/config.txt
 
     logtoboth "* Plugin $pfx: Complete Phase 1"
 else
