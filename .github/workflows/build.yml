@@ -42,8 +42,8 @@ jobs:
           --bootset camera=1,boot_behaviour=B2 \
           --extend --xmb 3072 \
           --plugin apps:"apps=@hubbel_apps|name=hubbel_apps" \
-          --plugin copyfile:"from=./files/.bash_profile|to=/home/pi/.bash_profile"
-          --plugin copyfile:"from=./files/.xinitrc|to=/home/pi/.xinitrc"
+          --plugin copyfile:"from=./files/.bash_profile|to=/home/pi/.bash_profile" \
+          --plugin copyfile:"from=./files/.xinitrc|to=/home/pi/.xinitrc" \
           $RPI_IMG_NAME.img
 
     - name: Zip image
