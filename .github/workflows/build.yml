@@ -44,6 +44,7 @@ jobs:
           --plugin apps:"apps=@hubbel_apps|name=hubbel_apps" \
           --plugin copyfile:"from=./files/.bash_profile|to=/home/pi/.bash_profile" \
           --plugin copyfile:"from=./files/.xinitrc|to=/home/pi/.xinitrc" \
+          --plugin copyfile:"from=./files/postcardscanner.service|to=/etc/systemd/system/postcardscanner.service" \
           $RPI_IMG_NAME.img
 
     - name: Zip image

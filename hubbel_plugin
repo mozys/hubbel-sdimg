@@ -26,45 +26,15 @@ then
     #
     logtoboth "* Plugin $pfx: Start Phase 0"
 
-    logtoboth "> Plugin $pfx: Configure .bash_profile and .xinitrc for X and browser autostart"
-    cat >> $SDMPT/home/pi/.bash_profile <<EOF
+    logtoboth "> Plugin $pfx: Install postcardscanner service"
 
-if [ -z \$DISPLAY ] && [ \$(tty) = /dev/tty1 ]
-then
-    startx
-fi
-
-EOF
-
-    cat >> $SDMPT/home/pi/.xinitrc <<EOF
-
-#!/usr/bin/env sh
-xset -dpms
-xset s off
-xset s noblank
-
-while true
-do
-    unclutter &
-    chromium-browser https://mozys.de \
-    --window-size=1360,768 \
-    --window-position=0,0 \
-    --start-fullscreen \
-    --kiosk \
-    --incognito \
-    --noerrdialogs \
-    --disable-translate \
-    --no-first-run \
-    --fast \
-    --fast-start \
-    --disable-infobars \
-    --disable-features=TranslateUI \
-    --disk-cache-dir=/dev/null \
-    --overscroll-history-navigation=0 \
-    --disable-pinch
-done
-
-EOF
+    cd $SDMPT/home/pi
+    git clone https://github.com/nzottmann/postcardscanner.git
+    cd postcardscanner
+    python3 -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    sudo systemctl enable postcardscanner.service
 
     logtoboth "* Plugin $pfx: Complete Phase 0"
 
