@@ -31,7 +31,6 @@ jobs:
       run: |
         chmod +x hubbel_plugin
         sudo sdm --customize \
-          --nowpa \
           --locale de_DE.UTF-8 \
           --keymap de \
           --restart \
@@ -42,8 +41,7 @@ jobs:
           --autologin \
           --bootset camera=1,boot_behaviour=B2 \
           --extend --xmb 3072 \
-          --apps @applist \
-          --poptions apps \
+          --plugin apps:"apps=@hubbel_apps|name=hubbel_apps"
           --plugin ./hubbel_plugin \
           $RPI_IMG_NAME.img
 
