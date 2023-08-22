@@ -45,6 +45,7 @@ jobs:
           --plugin copyfile:"from=./files/.bash_profile|to=/home/pi/.bash_profile|mkdirif=yes" \
           --plugin copyfile:"from=./files/.xinitrc|to=/home/pi/.xinitrc|mkdirif=yes" \
           --plugin copyfile:"from=./files/postcardscanner.service|to=/etc/systemd/system/postcardscanner.service|mkdirif=yes" \
+          --plugin ./hubbel_plugin \
           $RPI_IMG_NAME.img
 
     - name: Zip image
