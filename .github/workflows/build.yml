@@ -17,6 +17,16 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        fetch-depth: 0 # Fetches the whole history including tags, needed for tagger
+
+    - name: Git tag
+      id: tagger
+      run: |
+        DESC=$(git --git-dir=$REPO_PATH/.git --work-tree=$REPO_PATH describe --tags)
+        ARTIFACT_BASENAME=hubbel_$DESC_$RPI_IMG_NAME
+        echo "gitdesc=$DESC" >> $GITHUB_OUTPUT
+        echo "artifact_basename=$ARTIFACT_BASENAME" >> $GITHUB_OUTPUT
 
     - name: Install sdm
       run: |
@@ -50,12 +60,28 @@ jobs:
 
     - name: Zip image
       run: |
-        zip $RPI_IMG_NAME.img.zip $RPI_IMG_NAME.img
+        zip ${{ steps.tagger.outputs.artifact_basename }}.img.zip $RPI_IMG_NAME.img
 
     - name: Upload sdimg and update artifact
       uses: actions/upload-artifact@v3
       with:
         name: image
         path: |
-          ${{ env.RPI_IMG_NAME }}.img.zip
+          ${{ steps.tagger.outputs.artifact_basename }}.img.zip
         retention-days: 3
+
+    - name: Get Changelog Entry
+      id: changelog_reader
+      uses: mindsers/changelog-reader-action@b97ce03a10d9bdbb07beb491c76a5a01d78cd3ef # v2.2.2
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        version: ${{ github.ref_name }}
+        path: CHANGELOG.md
+
+    - name: Release
+      uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844 # v0.1.15
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        body: ${{ steps.changelog_reader.outputs.changes }}
+        files: |
+          ${{ steps.tagger.outputs.artifact_basename }}.img.zip
