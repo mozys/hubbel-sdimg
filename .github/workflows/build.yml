@@ -46,10 +46,14 @@ jobs:
           --plugin copyfile:"from=./files/.xinitrc|to=/home/pi/.xinitrc"
           $RPI_IMG_NAME.img
 
+    - name: Zip image
+      run: |
+        zip $RPI_IMG_NAME.img.zip $RPI_IMG_NAME.img
+
     - name: Upload sdimg and update artifact
       uses: actions/upload-artifact@v3
       with:
         name: image
         path: |
-          ${{ env.RPI_IMG_NAME }}.img
+          ${{ env.RPI_IMG_NAME }}.img.zip
         retention-days: 3
