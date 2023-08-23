@@ -48,6 +48,7 @@ then
     python3 -m venv venv
     source venv/bin/activate
     pip install -r requirements.txt
+    sudo chown -R pi /home/pi/postcardscanner
     sudo systemctl enable postcardscanner.service
 
     logtoboth "> Set 'camera_auto_detect=1' in /boot/config.txt"
