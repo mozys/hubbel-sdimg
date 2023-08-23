@@ -30,6 +30,7 @@ then
 
     cp ./files/.bash_profile $SDMPT/home/pi/.bash_profile
     cp ./files/.xinitrc $SDMPT/home/pi/.xinitrc
+    cp ./files/050-hubbel.sh $SDMPT/usr/local/sdm/1piboot/050-hubbel.sh
 
     logtoboth "* Plugin $pfx: Complete Phase 0"
 
@@ -50,9 +51,6 @@ then
     pip install -r requirements.txt
     sudo chown -R pi /home/pi/postcardscanner
     sudo systemctl enable postcardscanner.service
-
-    logtoboth "> Set 'camera_auto_detect=1' in /boot/config.txt"
-    sed -i "s/camera_auto_detect=0/camera_auto_detect=1/" /boot/config.txt
 
     logtoboth "* Plugin $pfx: Complete Phase 1"
 else
