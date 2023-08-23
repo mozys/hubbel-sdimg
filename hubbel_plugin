@@ -31,6 +31,7 @@ then
     cp ./files/.bash_profile $SDMPT/home/pi/.bash_profile
     cp ./files/.xinitrc $SDMPT/home/pi/.xinitrc
     cp ./files/050-hubbel.sh $SDMPT/usr/local/sdm/1piboot/050-hubbel.sh
+    chmod +x $SDMPT/usr/local/sdm/1piboot/050-hubbel.sh
 
     logtoboth "* Plugin $pfx: Complete Phase 0"
 
