@@ -51,6 +51,7 @@ jobs:
           --autologin \
           --bootset camera=1,boot_behaviour=B2 \
           --extend --xmb 3072 \
+          --bootscripts \
           --plugin apps:"apps=@hubbel_apps|name=hubbel_apps" \
           --plugin copyfile:"from=$PWD/files/postcardscanner.service|to=/etc/systemd/system|mkdirif=yes|chown=root:root" \
           --plugin ./hubbel_plugin \
