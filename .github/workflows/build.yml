@@ -12,7 +12,7 @@ jobs:
     env:
       RPI_IMG_FOLDER: raspios_lite_armhf-2023-05-03
       RPI_IMG_NAME: 2023-05-03-raspios-bullseye-armhf-lite
-      SDM_BRANCH: b66a573f0da94126d54c9d0ce1cfd33dcbedd0b6
+      SDM_BRANCH: 210897b5eb1e81a404338a81833d07c253682084
 
     steps:
     - name: Checkout
@@ -53,6 +53,9 @@ jobs:
           --extend --xmb 3072 \
           --bootscripts \
           --plugin apps:"apps=@hubbel_apps|name=hubbel_apps" \
+          --plugin copyfile:"from=$PWD/files/.bash_profile|to=/home/pi|mkdirif=yes|chown=pi:pi|runphase=postinstall" \
+          --plugin copyfile:"from=$PWD/files/.xinitrc|to=/home/pi|mkdirif=yes|chown=pi:pi|runphase=postinstall" \
+          --plugin copyfile:"from=$PWD/files/050-hubbel.sh|to=/usr/local/sdm/1piboot/|mkdirif=yes|chown=root:root|chmod=755" \
           --plugin copyfile:"from=$PWD/files/postcardscanner.service|to=/etc/systemd/system|mkdirif=yes|chown=root:root" \
           --plugin ./hubbel_plugin \
           $RPI_IMG_NAME.img

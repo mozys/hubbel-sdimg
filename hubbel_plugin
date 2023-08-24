@@ -26,13 +26,6 @@ then
     #
     logtoboth "* Plugin $pfx: Start Phase 0"
 
-    logtoboth "> Plugin $pfx: Configure .bash_profile and .xinitrc for X and browser autostart"
-
-    cp ./files/.bash_profile $SDMPT/home/pi/.bash_profile
-    cp ./files/.xinitrc $SDMPT/home/pi/.xinitrc
-    cp ./files/050-hubbel.sh $SDMPT/usr/local/sdm/1piboot/050-hubbel.sh
-    chmod +x $SDMPT/usr/local/sdm/1piboot/050-hubbel.sh
-
     logtoboth "* Plugin $pfx: Complete Phase 0"
 
 elif [ "$phase" == "1" ]

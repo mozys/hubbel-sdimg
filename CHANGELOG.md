@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+- Copy files using copyfile after fix in sdm 8.6
+
 ## [0.0.2] - 2023-08-23
 ### Fixed
 - Fix copy X and browser autostart files
