@@ -4,6 +4,5 @@ xserver-xorg-core
 xinit
 x11-xserver-utils
 chromium-browser
-unclutter
 python3-venv
 git

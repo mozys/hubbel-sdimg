@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Remove mouse cursor #5
+
 ### Changed
 - Copy files using copyfile after fix in sdm 8.6
 
