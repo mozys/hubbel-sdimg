@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Copy files using copyfile after fix in sdm 8.6
+- Change fixed resolution to 1280x1024 #6
 
 ## [0.0.2] - 2023-08-23
 ### Fixed
