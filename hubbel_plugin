@@ -40,9 +40,10 @@ then
     cd /home/pi
     git clone https://github.com/nzottmann/postcardscanner.git
     cd postcardscanner
-    python3 -m venv venv
+    git checkout a07baff7cca1216796b347c7c5c8171d04d0ff2c
+    python3 -m venv --system-site-packages venv
     source venv/bin/activate
-    pip install -r requirements.txt
+    pip install -I -r requirements.txt
     sudo chown -R pi /home/pi/postcardscanner
     sudo systemctl enable postcardscanner.service
 
