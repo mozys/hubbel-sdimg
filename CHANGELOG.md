@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Clone fixed commit id of postcardscanner
 - Use local packages in venv for picamera2
+- Add empty initial img.jpg
 
 ## [0.0.3] - 2023-08-30
 ### Fixed

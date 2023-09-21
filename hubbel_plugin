@@ -41,6 +41,7 @@ then
     git clone https://github.com/nzottmann/postcardscanner.git
     cd postcardscanner
     git checkout a07baff7cca1216796b347c7c5c8171d04d0ff2c
+    touch app/img.jpg
     python3 -m venv --system-site-packages venv
     source venv/bin/activate
     pip install -I -r requirements.txt
