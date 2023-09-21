@@ -6,3 +6,4 @@ x11-xserver-utils
 chromium-browser
 python3-venv
 git
+libzbar0
