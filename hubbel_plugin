@@ -40,7 +40,7 @@ then
     cd /home/pi
     git clone https://github.com/nzottmann/postcardscanner.git
     cd postcardscanner
-    git checkout f903bf9cba7e03995336e20c0b7f75b1c2bd7704
+    git checkout bd26b954535fdf43cca7e7f5372d41de5f1aae16
     touch app/img.jpg
     python3 -m venv --system-site-packages venv
     source venv/bin/activate
