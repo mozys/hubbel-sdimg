@@ -58,7 +58,7 @@ jobs:
           --plugin copyfile:"from=$PWD/files/.xinitrc|to=/home/pi|mkdirif=yes|chown=pi:pi|runphase=postinstall" \
           --plugin copyfile:"from=$PWD/files/050-hubbel.sh|to=/usr/local/sdm/1piboot/|mkdirif=yes|chown=root:root|chmod=755" \
           --plugin copyfile:"from=$PWD/files/postcardscanner.service|to=/etc/systemd/system|mkdirif=yes|chown=root:root" \
-          --plugin ./hubbel_plugin \
+          --plugin ./hubbel_plugin:"postcardscanner_version=1e9eedef2d3a250da1c32b3df60590489f86a25c" \
           $RPI_IMG_NAME.img
 
     - name: Zip image

@@ -18,6 +18,8 @@ phase=$1
 pfx="$(basename $0)"     #For messages
 args="$2"
 loadparams
+vldargs="|postcardscanner_version|"
+rqdargs="|postcardscanner_version|"
 
 if [ "$phase" == "0" ]
 then
@@ -37,10 +39,12 @@ then
 
     logtoboth "> Plugin $pfx: Install postcardscanner service"
 
+    plugin_getargs $pfx "$args" "$vldargs" "$rqdargs"
+
     cd /home/pi
     git clone https://github.com/nzottmann/postcardscanner.git
     cd postcardscanner
-    git checkout a60404e0146109c80400c3eaab1f613991db506e
+    git checkout $postcardscanner_version
     touch app/img.jpg
     python3 -m venv --system-site-packages venv
     source venv/bin/activate
