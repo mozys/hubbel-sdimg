@@ -9,6 +9,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        variant:
+          - name: hubland
+            postcardscanner_version: 1e9eedef2d3a250da1c32b3df60590489f86a25c
+            hubbel_url: https://hubbel-hybrid-client.netlify.app
+          - name: stadtwue
+            postcardscanner_version: a60404e0146109c80400c3eaab1f613991db506e
+            hubbel_url: https://hubbel.hubbel-mitmachen.de
     env:
       RPI_IMG_FOLDER: raspios_lite_armhf-2023-05-03
       RPI_IMG_NAME: 2023-05-03-raspios-bullseye-armhf-lite
@@ -24,7 +33,7 @@ jobs:
       id: tagger
       run: |
         DESC=$(git describe --tags)
-        ARTIFACT_BASENAME=hubbel_$DESC_$RPI_IMG_NAME
+        ARTIFACT_BASENAME=hubbel_${{ matrix.variant.name }}_$DESC_$RPI_IMG_NAME
         echo "gitdesc=$DESC" >> $GITHUB_OUTPUT
         echo "artifact_basename=$ARTIFACT_BASENAME" >> $GITHUB_OUTPUT
 
@@ -40,7 +49,7 @@ jobs:
 
     - name: Modify image with sdm
       run: |
-        sed -i 's#HUBBEL_URL#https://hubbel.hubbel-mitmachen.de#g' $PWD/files/.xinitrc
+        sed -i 's#HUBBEL_URL#${{ matrix.variant.hubbel_url }}#g' $PWD/files/.xinitrc
         chmod +x hubbel_plugin
         sudo sdm --customize \
           --locale de_DE.UTF-8 \
@@ -59,7 +68,7 @@ jobs:
           --plugin copyfile:"from=$PWD/files/.xinitrc|to=/home/pi|mkdirif=yes|chown=pi:pi|runphase=postinstall" \
           --plugin copyfile:"from=$PWD/files/050-hubbel.sh|to=/usr/local/sdm/1piboot/|mkdirif=yes|chown=root:root|chmod=755" \
           --plugin copyfile:"from=$PWD/files/postcardscanner.service|to=/etc/systemd/system|mkdirif=yes|chown=root:root" \
-          --plugin ./hubbel_plugin:"postcardscanner_version=1e9eedef2d3a250da1c32b3df60590489f86a25c" \
+          --plugin ./hubbel_plugin:"postcardscanner_version=${{ matrix.variant.postcardscanner_version }}" \
           $RPI_IMG_NAME.img
 
     - name: Zip image
