@@ -40,6 +40,7 @@ jobs:
 
     - name: Modify image with sdm
       run: |
+        sed -i 's#HUBBEL_URL#https://hubbel.hubbel-mitmachen.de#g' $PWD/files/.xinitrc
         chmod +x hubbel_plugin
         sudo sdm --customize \
           --locale de_DE.UTF-8 \

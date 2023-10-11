@@ -5,7 +5,7 @@ xset s noblank
 
 while true
 do
-    chromium-browser https://hubbel.hubbel-mitmachen.de \
+    chromium-browser HUBBEL_URL \
     --window-size=1280,1024 \
     --window-position=0,0 \
     --start-fullscreen \
