@@ -33,9 +33,10 @@ jobs:
       id: tagger
       run: |
         DESC=$(git describe --tags)
-        ARTIFACT_BASENAME=hubbel_${{ matrix.variant.name }}_$DESC_$RPI_IMG_NAME
+        ARTIFACT_BASENAME=hubbel-$DESC-${{ matrix.variant.name }}
         echo "gitdesc=$DESC" >> $GITHUB_OUTPUT
         echo "artifact_basename=$ARTIFACT_BASENAME" >> $GITHUB_OUTPUT
+        echo $ARTIFACT_BASENAME
 
     - name: Install sdm
       run: |
@@ -73,7 +74,8 @@ jobs:
 
     - name: Zip image
       run: |
-        zip ${{ steps.tagger.outputs.artifact_basename }}.img.zip $RPI_IMG_NAME.img
+        mv $RPI_IMG_NAME.img ${{ steps.tagger.outputs.artifact_basename }}.img
+        zip ${{ steps.tagger.outputs.artifact_basename }}.img.zip ${{ steps.tagger.outputs.artifact_basename }}.img
 
     - name: Upload sdimg
       uses: actions/upload-artifact@v3
