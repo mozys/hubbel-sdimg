@@ -42,7 +42,7 @@ jobs:
       run: |
         curl -L https://raw.githubusercontent.com/gitbls/sdm/$SDM_TAG/EZsdmInstaller -o EZsdmInstaller
         chmod 755 EZsdmInstaller
-        sudo EZsdmInstaller
+        sudo ./EZsdmInstaller
 
     - name: Fetch and unpack rpi os image
       run: |
