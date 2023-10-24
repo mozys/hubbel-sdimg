@@ -51,6 +51,7 @@ jobs:
 
     - name: Modify image with sdm
       run: |
+        sudo apt update
         sudo apt install qemu-user-static binfmt-support
         sed -i 's#HUBBEL_URL#${{ matrix.variant.hubbel_url }}#g' $PWD/files/.xinitrc
         chmod +x hubbel_plugin
