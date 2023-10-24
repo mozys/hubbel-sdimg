@@ -62,11 +62,9 @@ jobs:
           --autologin \
           --plugin raspiconfig:"camera=1|boot_behaviour=B2" \
           --extend --xmb 3072 \
-          --bootscripts \
           --plugin apps:"apps=@hubbel_apps|name=hubbel_apps" \
           --plugin copyfile:"from=$PWD/files/.bash_profile|to=/home/pi|mkdirif=yes|chown=pi:pi|runphase=postinstall" \
           --plugin copyfile:"from=$PWD/files/.xinitrc|to=/home/pi|mkdirif=yes|chown=pi:pi|runphase=postinstall" \
-          --plugin copyfile:"from=$PWD/files/050-hubbel.sh|to=/usr/local/sdm/1piboot/|mkdirif=yes|chown=root:root|chmod=755" \
           --plugin copyfile:"from=$PWD/files/postcardscanner.service|to=/etc/systemd/system|mkdirif=yes|chown=root:root" \
           --plugin ./hubbel_plugin:"postcardscanner_version=${{ matrix.variant.postcardscanner_version }}" \
           $RPI_IMG_NAME.img
