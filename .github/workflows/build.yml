@@ -21,7 +21,7 @@ jobs:
     env:
       RPI_IMG_FOLDER: raspios_lite_armhf-2023-05-03
       RPI_IMG_NAME: 2023-05-03-raspios-bullseye-armhf-lite
-      SDM_BRANCH: 205dfa6fc0c1fa1b8617d1aaaa88b78af77b1c27
+      SDM_TAG: 'V9.5'
 
     steps:
     - name: Checkout
@@ -40,8 +40,9 @@ jobs:
 
     - name: Install sdm
       run: |
-        export SDMSRC=https://raw.githubusercontent.com/mozys/sdm/$SDM_BRANCH
-        curl -L https://raw.githubusercontent.com/mozys/sdm/$SDM_BRANCH/EZsdmInstaller | bash
+        curl -L https://raw.githubusercontent.com/gitbls/sdm/$SDM_TAG/EZsdmInstaller EZsdmInstaller
+        chmod 755 EZsdmInstaller
+        sudo EZsdmInstaller
 
     - name: Fetch and unpack rpi os image
       run: |
