@@ -58,8 +58,7 @@ jobs:
           --restart \
           --plugin disables:"piwiz"
           --regen-ssh-host-keys \
-          --user pi \
-          --password-user raspberry \
+          --plugin user:"adduser=pi|password=raspberry" \
           --autologin \
           --bootset camera=1,boot_behaviour=B2 \
           --extend --xmb 3072 \
