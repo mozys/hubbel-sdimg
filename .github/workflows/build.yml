@@ -56,7 +56,7 @@ jobs:
         sudo sdm --customize \
           --plugin L10n:"keymap=de|locale=de_DE.UTF-8|timezone=Europe/Berlin"
           --restart \
-          --disable piwiz \
+          --plugin disables:"piwiz"
           --regen-ssh-host-keys \
           --user pi \
           --password-user raspberry \
