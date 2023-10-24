@@ -54,13 +54,13 @@ jobs:
         sed -i 's#HUBBEL_URL#${{ matrix.variant.hubbel_url }}#g' $PWD/files/.xinitrc
         chmod +x hubbel_plugin
         sudo sdm --customize \
-          --plugin L10n:"keymap=de|locale=de_DE.UTF-8|timezone=Europe/Berlin"
+          --plugin L10n:"keymap=de|locale=de_DE.UTF-8|timezone=Europe/Berlin" \
           --restart \
-          --plugin disables:"piwiz"
+          --plugin disables:"piwiz" \
           --regen-ssh-host-keys \
           --plugin user:"adduser=pi|password=raspberry" \
           --autologin \
-          --bootset camera=1,boot_behaviour=B2 \
+          --plugin raspiconfig:"camera=1|boot_behaviour=B2" \
           --extend --xmb 3072 \
           --bootscripts \
           --plugin apps:"apps=@hubbel_apps|name=hubbel_apps" \
