@@ -40,7 +40,7 @@ jobs:
 
     - name: Install sdm
       run: |
-        curl -L https://raw.githubusercontent.com/gitbls/sdm/$SDM_TAG/EZsdmInstaller EZsdmInstaller
+        curl -L https://raw.githubusercontent.com/gitbls/sdm/$SDM_TAG/EZsdmInstaller -o EZsdmInstaller
         chmod 755 EZsdmInstaller
         sudo EZsdmInstaller
 
