@@ -59,7 +59,6 @@ jobs:
           --plugin disables:"piwiz" \
           --regen-ssh-host-keys \
           --plugin user:"adduser=pi|password=raspberry" \
-          --autologin \
           --plugin raspiconfig:"camera=1|boot_behaviour=B2" \
           --extend --xmb 3072 \
           --plugin apps:"apps=@hubbel_apps|name=hubbel_apps" \
