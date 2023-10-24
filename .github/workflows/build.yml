@@ -54,8 +54,7 @@ jobs:
         sed -i 's#HUBBEL_URL#${{ matrix.variant.hubbel_url }}#g' $PWD/files/.xinitrc
         chmod +x hubbel_plugin
         sudo sdm --customize \
-          --locale de_DE.UTF-8 \
-          --keymap de \
+          --plugin L10n:"keymap=de|locale=de_DE.UTF-8|timezone=Europe/Berlin"
           --restart \
           --disable piwiz \
           --regen-ssh-host-keys \
