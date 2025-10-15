@@ -25,7 +25,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v5
       with:
         fetch-depth: 0 # Fetches the whole history including tags, needed for tagger
 
@@ -78,7 +78,7 @@ jobs:
         zip ${{ steps.tagger.outputs.artifact_basename }}.img.zip ${{ steps.tagger.outputs.artifact_basename }}.img
 
     - name: Upload sdimg
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.tagger.outputs.artifact_basename }}
         path: |
