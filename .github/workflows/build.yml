@@ -13,7 +13,7 @@ jobs:
       matrix:
         variant:
           - name: hubland
-            postcardscanner_version: 1e9eedef2d3a250da1c32b3df60590489f86a25c
+            postcardscanner_version: a60404e0146109c80400c3eaab1f613991db506e
             hubbel_url: https://hubbel-hybrid-client.netlify.app
           - name: stadtwue
             postcardscanner_version: a60404e0146109c80400c3eaab1f613991db506e
@@ -78,7 +78,7 @@ jobs:
         zip ${{ steps.tagger.outputs.artifact_basename }}.img.zip ${{ steps.tagger.outputs.artifact_basename }}.img
 
     - name: Upload sdimg
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ steps.tagger.outputs.artifact_basename }}
         path: |
